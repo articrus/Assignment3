@@ -185,6 +185,12 @@ MonoBehaviour:
   lockedSprite: {fileID: -1497773947, guid: 0facf01f9c4ec4449b56045cf6e4adae, type: 3}
   openTooltip: {fileID: -1237122923, guid: 0f648f3c1beb86748984826c3817c64a, type: 3}
   lockedTooltip: {fileID: -716023397, guid: 0f648f3c1beb86748984826c3817c64a, type: 3}
+  doorSprites:
+  - {fileID: 483517832, guid: 0facf01f9c4ec4449b56045cf6e4adae, type: 3}
+  - {fileID: -1497773947, guid: 0facf01f9c4ec4449b56045cf6e4adae, type: 3}
+  doorToolTips:
+  - {fileID: -1237122923, guid: 0f648f3c1beb86748984826c3817c64a, type: 3}
+  - {fileID: -716023397, guid: 0f648f3c1beb86748984826c3817c64a, type: 3}
 --- !u!61 &758618390429672008
 BoxCollider2D:
   m_ObjectHideFlags: 0

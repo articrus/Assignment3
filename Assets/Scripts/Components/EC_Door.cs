@@ -11,10 +11,10 @@ public class EC_Door : MonoBehaviour
 
     [Header("Icons")]
     [SerializeField] SpriteRenderer iconSR;
-    [SerializeField] Sprite openSprite;
-    [SerializeField] Sprite lockedSprite;
-    [SerializeField] Sprite openTooltip;
-    [SerializeField] Sprite lockedTooltip;
+    //0 - Open, 1 - Locked,
+    [SerializeField] Sprite[] doorSprites = new Sprite[2];
+    //0 - OpenToolTip, 2 - LockedToolTip
+    [SerializeField] Sprite[] doorToolTips = new Sprite[2];
 
     // Variables
     bool locked;
@@ -56,15 +56,17 @@ public class EC_Door : MonoBehaviour
     void Unlock()
     {
         locked = false;
-        iconSR.sprite = openSprite;
-        entity.tooltip = openTooltip;
+        //iconSR.sprite = openSprite;
+        entity.tooltip = doorToolTips[0];
+        iconSR.sprite = doorSprites[0];
     }
 
     void Lock()
     {
         locked = true;
-        iconSR.sprite = lockedSprite;
-        entity.tooltip = lockedTooltip;
+        //iconSR.sprite = lockedSprite;
+        iconSR.sprite = doorSprites[1];
+        entity.tooltip = doorToolTips[1];
     }
 
     public void EnterRoom()
