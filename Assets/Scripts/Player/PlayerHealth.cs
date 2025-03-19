@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth;
-    int currentHealth;
+    //Modified protection level to access
+    public int currentHealth;
 
     // Components
     [SerializeField] Counter cCounter;

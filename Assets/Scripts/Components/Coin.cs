@@ -17,6 +17,12 @@ public class Coin : MonoBehaviour
 
     void Update()
     {
+        //Get ride of the coin before it adds to the newgame
+        if(Player.instance.Health.currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+
         if (transform.position.y <= pickupY)
         {
             // Pick up
