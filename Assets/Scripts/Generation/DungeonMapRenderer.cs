@@ -5,15 +5,11 @@ using UnityEngine;
 public class DungeonMapRenderer : MonoBehaviour
 {
     [Header("Generation Settings")]
-    [SerializeField] int mapWidth = 256;
-    [SerializeField] int mapHeight = 256;
-    [SerializeField] Color roomColor;
-    [SerializeField] Color clearedColor;
-    [SerializeField] Color bossColor;
-    [SerializeField] Color currentColor;
-    [SerializeField] Color lineColor;
-    [SerializeField] Color outlineColor;
-    [SerializeField] Color bgColor;
+    //Map Height / Width
+    [SerializeField] Vector2Int mapDimensions = new Vector2Int(256, 256);
+    //Colors List
+    //0 - Room, 1 - Cleared, 2 - Boss, 3 - Current, 4 - Line, 5 - Outline, 6 - Background
+    [SerializeField] Color[] mapColors = new Color[7];
     [SerializeField] Vector2Int spacing;
     [SerializeField] Vector2Int offset;
 
@@ -96,13 +92,13 @@ public class DungeonMapRenderer : MonoBehaviour
         roomsByDepth = new Dictionary<int, List<DMR_RoomInfo>>();
 
         // Initialize texure
-        mapTexture = new Texture2D(mapWidth, mapHeight);
+        mapTexture = new Texture2D(mapDimensions.x, mapDimensions.y);
         mapTexture.filterMode = FilterMode.Point;
         mapTexture.wrapMode = TextureWrapMode.Clamp;
 
         // Set components
         sr = GetComponent<SpriteRenderer>();
-        sr.sprite = Sprite.Create(mapTexture, new Rect(0.0f, 0.0f, mapTexture.width, mapTexture.height), new Vector2(0.5f, 0.5f), 16);
+        sr.sprite = Sprite.Create(mapTexture, new Rect(0.0f, 0.0f, mapDimensions.x, mapDimensions.y), new Vector2(0.5f, 0.5f), 16);
     }
 
     public void DisplayMap(List<Room> mapRooms, Room currentRoom)
@@ -121,17 +117,17 @@ public class DungeonMapRenderer : MonoBehaviour
                 // Draw connections to children
                 foreach (DMR_RoomInfo child in room.children)
                 {
-                    DrawLine(room.position, child.position, lineColor);
+                    DrawLine(room.position, child.position, mapColors[4]);
                 }
 
                 // Draw room
                 DrawIcon(room.position,
                          room.currentRoom ? square : room.bossRoom ? skull : room.cleared ? xmark : circle,
-                         bgColor,
-                         room.currentRoom ? currentColor : room.bossRoom ? bossColor : room.cleared ? clearedColor : roomColor);
+                         mapColors[6],
+                         room.currentRoom ? mapColors[3] : room.bossRoom ? mapColors[2] : room.cleared ? mapColors[1] : mapColors[0]);
             }
         }
-        DrawOutline(outlineColor);
+        DrawOutline(mapColors[5]);
 
         mapTexture.Apply();
     }
@@ -217,11 +213,11 @@ public class DungeonMapRenderer : MonoBehaviour
     /// </summary>
     void ClearMap()
     {
-        for (int y = 0; y < mapHeight; y++)
+        for (int y = 0; y < mapDimensions.y; y++)
         {
-            for (int x = 0; x < mapWidth; x++)
+            for (int x = 0; x < mapDimensions.x; x++)
             {
-                mapTexture.SetPixel(x, y, bgColor);
+                mapTexture.SetPixel(x, y, mapColors[6]);
             }
         }
     }
@@ -242,7 +238,7 @@ public class DungeonMapRenderer : MonoBehaviour
             int y = Mathf.RoundToInt(point.y);
 
             // Set the pixel if within bounds
-            if (x >= 0 && x < mapWidth && y >= 0 && y < mapHeight)
+            if (x >= 0 && x < mapDimensions.x && y >= 0 && y < mapDimensions.y)
             {
                 mapTexture.SetPixel(x, y, color);
             }
@@ -268,7 +264,7 @@ public class DungeonMapRenderer : MonoBehaviour
                 int py = center.y + y - 3;
 
                 // Bounds check
-                if (px >= 0 && px < mapWidth && py >= 0 && py < mapHeight)
+                if (px >= 0 && px < mapDimensions.x && py >= 0 && py < mapDimensions.y)
                 {
                     if (pattern[y][x] == 'x')
                     {
@@ -291,13 +287,13 @@ public class DungeonMapRenderer : MonoBehaviour
         Color[] originalPixels = mapTexture.GetPixels();
         Color[] newPixels = mapTexture.GetPixels();
 
-        for (int y = 1; y < mapHeight - 1; y++)
+        for (int y = 1; y < mapDimensions.y - 1; y++)
         {
-            for (int x = 1; x < mapWidth - 1; x++)
+            for (int x = 1; x < mapDimensions.x - 1; x++)
             {
-                int index = y * mapWidth + x;
+                int index = y * mapDimensions.x + x;
 
-                if (originalPixels[index] != bgColor)
+                if (originalPixels[index] != mapColors[6])
                     continue;
 
                 // Check neighbors for non background pixels
@@ -308,8 +304,8 @@ public class DungeonMapRenderer : MonoBehaviour
                     {
                         if (nx == 0 && ny == 0) continue; // Skip the current pixel
 
-                        int neighborIndex = (y + ny) * mapWidth + (x + nx);
-                        if (originalPixels[neighborIndex] != bgColor)
+                        int neighborIndex = (y + ny) * mapDimensions.x + (x + nx);
+                        if (originalPixels[neighborIndex] != mapColors[6])
                         {
                             hasNeighbor = true;
                             break;

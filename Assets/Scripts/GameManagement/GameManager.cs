@@ -61,28 +61,17 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadWinScreen()
     {
-        PlayerStats.instance.win = true;
-        PlayerStats.instance.time = (int)timeSinceGameStarted / 60;
-
-        // Stop the game
-        turnManager.StopTurnManager();
-
-        // Unload dungeon
-        SceneManager.instance.UnloadScene(3);
-        // Unload shop
-        SceneManager.instance.UnloadScene(4);
-        // Unload player
-        SceneManager.instance.UnloadScene(2);
-        // Unload game
-        SceneManager.instance.UnloadScene(1);
-
-        // Load end screen
-        SceneManager.instance.LoadScene(5);
+        EndTheGame(true);
     }
 
     public void PlayerKilled()
     {
-        PlayerStats.instance.win = false;
+        EndTheGame(false);
+    }
+
+    private void EndTheGame(bool win)
+    {
+        PlayerStats.instance.win = win;
         PlayerStats.instance.time = (int)timeSinceGameStarted / 60;
 
         // Stop the game
