@@ -59,6 +59,13 @@ public class EC_Health : MonoBehaviour
     public void Kill()
     {
         PlayerStats.instance.enemiesDefeated++;
+        PlayerStats.instance.bonusEnemiesDefeated++;
+        if(PlayerStats.instance.bonusEnemiesDefeated == 10)
+        {
+            PlayerStats.instance.bonusEnemiesDefeated = 0;
+            Player.instance.bonusCoins.DropCoins();
+        }
+
         deathEvent.Invoke();
         ArtifactManager.instance.TriggerKillEnemy();
 

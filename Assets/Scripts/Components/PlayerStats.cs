@@ -7,6 +7,7 @@ public class PlayerStats : Singleton<PlayerStats>
     public int stage;
     public int time;
     public int enemiesDefeated;
+    public int bonusEnemiesDefeated; //For bonus rewards
     public int artifactsDiscovered;
     public int artifactsTriggered;
     public int damageDealt;
@@ -20,6 +21,7 @@ public class PlayerStats : Singleton<PlayerStats>
         stage = 0;
         time = 0;
         enemiesDefeated = 0;
+        bonusEnemiesDefeated = 0;
         artifactsDiscovered = 0;
         artifactsTriggered = 0;
         damageDealt = 0;

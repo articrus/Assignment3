@@ -12,6 +12,7 @@ public class Player : Singleton<Player>
     PlayerDamage _damage;
     public PlayerWallet Wallet { get { return _wallet; } }
     PlayerWallet _wallet;
+    public EC_CoinDropper bonusCoins;
 
     protected override void Awake()
     {
@@ -20,5 +21,6 @@ public class Player : Singleton<Player>
         _health = GetComponent<PlayerHealth>();
         _damage = GetComponent<PlayerDamage>();
         _wallet = GetComponent<PlayerWallet>();
+        bonusCoins = GetComponent<EC_CoinDropper>();
     }
 }

@@ -875,6 +875,7 @@ GameObject:
   - component: {fileID: 1440973759}
   - component: {fileID: 1440973758}
   - component: {fileID: 1440973757}
+  - component: {fileID: 1440973762}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -924,6 +925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  currentHealth: 0
   cCounter: {fileID: 505066434}
   mCounter: {fileID: 1110239876}
 --- !u!114 &1440973760
@@ -938,6 +940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180dfbbc70dd9d64f81b98414c8f8614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bonusCoins: {fileID: 0}
 --- !u!4 &1440973761
 Transform:
   m_ObjectHideFlags: 0
@@ -958,6 +961,21 @@ Transform:
   - {fileID: 2097928928}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1440973762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440973756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78531e1e29a86814da1a1e7df81c26ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 5
+  rand: 2
+  coinPrefab: {fileID: 3946428023895682049, guid: 6d869c8f8e1e23d4b93f5c087a2fe142, type: 3}
 --- !u!1 &1742065705
 GameObject:
   m_ObjectHideFlags: 0
