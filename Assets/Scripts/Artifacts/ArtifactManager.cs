@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ArtifactManager : Singleton<ArtifactManager>
 {
-    List<Artifact> artifacts;
+    //List<Artifact> artifacts;
+    [SerializeField] LinkedList<Artifact> artifactList;
 
     [SerializeField] List<A_Base> startingArtifacts = new List<A_Base>();
     public List<A_Base> undiscoveredArtifacts;
@@ -42,7 +43,8 @@ public class ArtifactManager : Singleton<ArtifactManager>
     {
         base.Awake();
 
-        artifacts = new List<Artifact>();
+        //artifacts = new List<Artifact>();
+        artifactList = new LinkedList<Artifact>();
         queue = new List<Artifact>();
     }
 
@@ -68,8 +70,9 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void AddArtifact(A_Base artifact)
     {
-        Artifact _a = new Artifact(artifact, Instantiate(visualizerGO, transform.position + new Vector3(artifacts.Count * 2.25f, 0), Quaternion.identity, transform).GetComponent<ArtifactVisualizer>());
-        artifacts.Add(_a);
+        //Old: Artifact _a = new Artifact(artifact, Instantiate(visualizerGO, transform.position + new Vector3(artifacts.Count * 2.25f, 0), Quaternion.identity, transform).GetComponent<ArtifactVisualizer>());
+        Artifact _a = new Artifact(artifact, Instantiate(visualizerGO, transform.position + new Vector3(artifactList.Count * 2.25f, 0), Quaternion.identity, transform).GetComponent<ArtifactVisualizer>());
+        artifactList.AddLast(_a);
         undiscoveredArtifacts.Remove(artifact);
         PlayerStats.instance.artifactsDiscovered++;
 
@@ -111,16 +114,17 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerStartOfTurn()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnStartOfTurn();
             artifact.TryTrigger();
         }
+
     }
 
     public void TriggerEndOfTurn()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnEndOfTurn();
             artifact.TryTrigger();
@@ -129,7 +133,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerStartOfEnemyTurn()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnStartOfEnemyTurn();
             artifact.TryTrigger();
@@ -138,7 +142,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerEnterRoom()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnEnterRoom();
             artifact.TryTrigger();
@@ -147,7 +151,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerEnterBossRoom()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnEnterBossRoom();
             artifact.TryTrigger();
@@ -156,7 +160,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerClearRoom()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach(Artifact artifact in artifactList)
         {
             artifact.artifact.OnClearRoom();
             artifact.TryTrigger();
@@ -165,7 +169,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerTakeDamage()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnTakeDamage();
             artifact.TryTrigger();
@@ -174,7 +178,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerDealDamage()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnDealDamage();
             artifact.TryTrigger();
@@ -183,7 +187,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerKillEnemy()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnKillEnemy();
             artifact.TryTrigger();
@@ -192,7 +196,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerChestOpen()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnChestOpen();
             artifact.TryTrigger();
@@ -201,7 +205,7 @@ public class ArtifactManager : Singleton<ArtifactManager>
 
     public void TriggerBossDefeated()
     {
-        foreach (Artifact artifact in artifacts)
+        foreach (Artifact artifact in artifactList)
         {
             artifact.artifact.OnBossDefeated();
             artifact.TryTrigger();
